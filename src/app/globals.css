@@ -1,6 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../../**/*.{js,ts,jsx,tsx,mdx}";
+
+@plugin "tailwindcss-animate";
+
+/* 
+  Define theme variables directly here for v4 native support 
+  OR rely on the config if correctly loaded.
+  Since we had issues, we'll ensure the base layers are correct.
+*/
+@layer theme {
+  :root {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    /* ... (Variables remain defined in @layer base below, but v4 prefers theme() usage) */
+  }
+}
 
 @layer base {
   :root {
