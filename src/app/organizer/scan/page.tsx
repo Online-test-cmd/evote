@@ -118,13 +118,6 @@ export default function ScanPage() {
                             styles={{
                                 container: { width: '100%', height: '100%' }
                             }}
-                            components={{
-                                audio: false,
-                                onOff: false,
-                                torch: true,
-                                zoom: false,
-                                finder: true
-                            }}
                         />
                     )}
 
