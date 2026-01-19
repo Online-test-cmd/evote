@@ -24,14 +24,37 @@ export default function CreateEventPage() {
         event.preventDefault();
         setLoading(true);
 
-        // TODO: Implement actual Supabase insertion logic here
-        // const formData = new FormData(event.currentTarget);
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
 
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+            if (!user) {
+                alert("You must be logged in to create an event.");
+                router.push("/login");
+                return;
+            }
+
+            const formData = new FormData(event.currentTarget);
+
+            const { error } = await supabase.from("events").insert({
+                organizer_id: user.id,
+                title: formData.get("title") as string,
+                description: formData.get("description") as string,
+                start_date: formData.get("date") as string,
+                location: formData.get("location") as string,
+                banner_url: formData.get("branding") as string || null,
+                is_active: true
+            });
+
+            if (error) throw error;
+
+            alert("Event created successfully!");
             router.push("/dashboard/events");
-        }, 1000);
+        } catch (err: any) {
+            console.error("Error creating event:", err);
+            alert("Failed to create event: " + err.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
